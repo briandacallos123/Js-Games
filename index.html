@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        height:100vh;
+    }
+    .container{
+        width:700px;
+        height:800px;
+        /* background-image:linear-gradient(120deg, rgba(255,255,0,.2), rgba(255,255,0,1)); */
+        text-align: center;
+        background-color: antiquewhite;
+        
+    }
+    .btn{
+        background-color: pink;
+        font-size: 1.2rem;
+        padding:.5em;
+        border:none;
+        cursor:pointer;
+    }
+    .result{
+        color:orangered
+    }
+    .effect{
+        height: 500px;
+        margin-top: 1rem;
+        /* background-color: red; */
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    img{
+        width:80%;
+        /* border-radius: 20px; */
+        height: 100%;
+        border:none;
+        
+    }
+
+   
+</style>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>Computer Choice: <span class="computer_choice"></span></h1>
+            <h1>Your Choice: <span class="user_choice"></span></h1>
+            <h1>Result: <span class="result"></span></h1>
+
+            <button class="btn rock">Rock</button>
+            <button class="btn scissors">Scissors</button>
+            <button class="btn paper">Paper</button>
+        </div>
+        <div class="effect">
+            <img id="myimg" alt="">
+        </div>
+    </div>
+
+    <script>
+        // images
+        const myimg = document.getElementById('myimg');
+        // loop images
+        const happyImages = ["happy1","happy2","happy3"];
+        const sad = "sad";
+        const draw = "draw"
+
+        const compuiter_choice = document.querySelector('.computer_choice');
+        const your_choice = document.querySelector('.user_choice');
+        const result = document.querySelector('.result');
+
+        // buttons
+        const btns = document.querySelectorAll('.btn');
+
+        let myChoice;
+        let choice
+        let res;
+
+        btns.forEach((btn)=>{
+            btn.addEventListener('click',(e)=>{
+                myChoice = e.target.classList[1];
+
+                your_choice.innerHTML = myChoice;
+                computerChoice();
+                results()
+
+                resImage()
+            })
+        })
+
+        function resImage(){
+            if(res == "You win"){
+                let ran = Math.floor(Math.random() * happyImages.length);
+                myimg.src = `./images/${happyImages[ran]}.jfif`;
+            }
+            if(res == "You lose"){
+                myimg.src = `./images/sad.jfif`;
+            }
+            if(res == "Draw"){
+                myimg.src = `images/draw.jfif`;
+            }
+            // myimg.style.animation = "cat 2s ease forwards"
+        }
+
+        function computerChoice(){
+            let comChoice = Math.floor( Math.random() * 3 + 1);
+
+            if(comChoice == 1){
+                choice = "rock";
+            }
+            else if(comChoice == 2){
+                choice = "scissors";
+            }else{
+                choice = "paper"
+            }
+
+            compuiter_choice.innerHTML = choice;
+        }
+
+        function results(){
+           if(myChoice == choice){
+            res = "Draw"
+           }else if(myChoice == "paper" && choice == "rock"){
+            res = "You win"
+           }else if(myChoice == "paper" && choice == "scissors"){
+            res = "You lose";
+           }else if(myChoice == "rock" && choice == "paper"){
+            res = "You lose";
+           }else if(myChoice == "rock" && choice == "scissors"){
+            res = "You win";
+           }else if(myChoice == "scissors" && choice == "paper"){
+            res = "You win";
+           }else if(myChoice == "scissors" && choice == "rock"){
+            res = "You Lose";
+           }
+           result.innerHTML = res;
+        }
+
+    </script>
+</body>
+</html>
